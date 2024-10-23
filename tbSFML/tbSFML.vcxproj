@@ -24,7 +24,7 @@
     <ProjectGuid>{1d547d27-5796-470d-bd71-a0bb5013c690}</ProjectGuid>
     <RootNamespace>tbSFML</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
-    <ProjectName>tbSFML-</ProjectName>
+    <ProjectName>tbSFML</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
