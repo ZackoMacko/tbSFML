@@ -1,5 +1,5 @@
-#include <SFML/Graphics.hpp>
-
+#include  <SFML/Graphics.hpp>
+#include "Player.h"
 //Memory leaks detetection
 #include "windows.h"
 #define _CRTDBG_MAP_ALLOC
@@ -125,18 +125,28 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
     int windowWidth = 800, windowHeight = 600;
-    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "TB Snake!");
+    sf::RenderWindow window(sf::VideoMode(windowWidth, windowHeight), "TB Snake");
     window.setFramerateLimit(60);
     
-    SimpleCircle circle(100, sf::Color::Red, 50, 50);
+    SimpleCircle circle(50, sf::Color::Red, windowWidth/2, windowHeight/2);
+
+    
+
+    
 
     sf::Texture texture;
-    if (!texture.loadFromFile("img/tych.png"))
+    if (!texture.loadFromFile("img/boll.png"))
     {
         // error...
     }
 
     SimpleImage image(texture, 0, 10);
+    sf::Sprite sprite;
+   
+
+    Player player(windowWidth / 2, windowHeight / 2, texture);
+    float positionX = 100.0f;
+    float positionY = 100.0f;
 
     while (window.isOpen())
     {
@@ -150,11 +160,20 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
 
         window.clear(sf::Color::Cyan);
-        circle.Update();
-        image.Update(windowWidth, windowHeight);
+        /*circle.Update();*/
 
-        image.Draw(window);
-        circle.Draw(window);
+        /*image.Update(windowWidth, windowHeight);*/
+
+        player.UpdateImage();
+
+       /* player.UpdatePlayer();*/
+        player.DetectCollision(windowWidth, windowHeight);
+        
+
+        /*image.Draw(window);*/
+        /*circle.Draw(window);*/
+        
+        player.Draw(window);
 
         window.display();
     }
