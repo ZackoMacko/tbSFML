@@ -160,22 +160,14 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
 
         window.clear(sf::Color::Cyan);
-        /*circle.Update();*/
-
-        /*image.Update(windowWidth, windowHeight);*/
-
+    
+       
         player.UpdateImage();
-
-       /* player.UpdatePlayer();*/
+        /* player.UpdatePlayer();*/
         player.DetectCollision(windowWidth, windowHeight);
-        
-
-        /*image.Draw(window);*/
-        /*circle.Draw(window);*/
-        
         player.Draw(window);
-
         window.display();
+             
     }
     
     return 0;

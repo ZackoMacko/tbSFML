@@ -74,38 +74,91 @@ void Player::DetectCollision(int winWidth, int winHeight)
 
 }
 
-bool moveLeft;
-bool moveRight;
+bool isHorisontalMovementLocked;
+bool isVerticalMovementLocked;
 void Player::UpdateImage()
 {
    
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+    if (!isVerticalMovementLocked)
     {
-        _direction.x = -1;
-        _position.x -= _speed.x;        
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) )
-    {         
-        _direction.x = 1;
-        _position.x += _speed.x;
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+        {
+            _direction.y = -1;        
+            isHorisontalMovementLocked = false;
+            isVerticalMovementLocked = true;
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+        {
+            _direction.y = 1;           
+            isHorisontalMovementLocked = false;
+            isVerticalMovementLocked = true;
+        }
     }
 
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+   /* if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
     {
         _direction.y = -1;
         _position.y -= _speed.y;
+
+        isHorisontalMovementLocked = false; 
+        isVerticalMovementLocked = true;
     }
     else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
     {
         _direction.y = 1;
         _position.y += _speed.y;
-       
+        isHorisontalMovementLocked = false;
+        isVerticalMovementLocked = true;    
+    }*/
+
+    if (!isHorisontalMovementLocked)
+    {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+        {
+
+            _direction.x = -1;
+            isHorisontalMovementLocked = true;
+            isVerticalMovementLocked = false;
+
+        }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+        {
+            _direction.x = 1;
+            isHorisontalMovementLocked = true;
+            isVerticalMovementLocked = false;
+        }
+    }
+    
+    
+    if (isHorisontalMovementLocked&& _direction.x==-1)
+    {
+
+        _position.x -= _speed.x;     
+        _sprite.move(_position);
+
+    }
+    else if (isHorisontalMovementLocked&& _direction.x==1)
+    {
+
+        _position.x += _speed.x;
+        _sprite.move(_position);
+    }
+
+    if (isVerticalMovementLocked && _direction.y == -1)
+    {
+        _position.y -= _speed.y;
+        _sprite.move(_position);
+    }
+    else if (isVerticalMovementLocked&& _direction.y==1)
+    {
+        _position.y += _speed.y;
+        _sprite.move(_position);
     }
    
    //Fråga Jonas för tips om hur man får spriten att fortsätta röra sig ett håll efter att ha tryckt knappen en gång
     
    
-    _sprite.move(_position);
+  
    
     
     
