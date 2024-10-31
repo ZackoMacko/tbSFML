@@ -8,13 +8,4 @@
 //}
 
 
-void GameObject::Draw()
-{
-
-}
-
-void GameObject::Update() 
-{
-
-}
 

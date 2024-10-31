@@ -3,49 +3,41 @@
 
 Player::Player( float startX, float startY, sf::Texture& texture)
 {
-	/*_sprite = sprite;*/   
-	
-	
-	/*_speed = speed;
-	_direction = direction;*/
-    
-
     _sprite.setTexture(texture);
-    
-
-    /*_direction.x = 1;
-    _direction.y = 1;*/
-
     _speed.x = 5.0f;
     _speed.y = 5.0f;
+    _position.x = startX;
+    _position.y = startY;
 }
-void Player::UpdatePlayer()
-{
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-    {
-        _position.x -= _speed.x;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-    {
-        _position.x += _speed.x;
-    }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        _position.y -= _speed.y;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-    {
-        _position.y += _speed.y;
-    }
-
-    _sprite.setPosition(_position);
-}
+//void Player::UpdatePlayer()
+//{
+//
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
+//    {
+//        _position.x -= _speed.x;
+//    }
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
+//    {
+//        _position.x += _speed.x;
+//    }
+//
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
+//    {
+//        _position.y -= _speed.y;
+//    }
+//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
+//    {
+//        _position.y += _speed.y;
+//    }
+//
+//    _sprite.setPosition(_position);
+//}
 
 void Player::DetectCollision(int winWidth, int winHeight)
 {
-   
+   //To-do: När du har implementerat en game over screen ska denna metod returnera en true/false, bool.
 
     if (_position.x > winWidth - _sprite.getTextureRect().width)
     {
@@ -95,22 +87,7 @@ void Player::UpdateImage()
         }
     }
 
-   /* if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-    {
-        _direction.y = -1;
-        _position.y -= _speed.y;
-
-        isHorisontalMovementLocked = false; 
-        isVerticalMovementLocked = true;
-    }
-    else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down) )
-    {
-        _direction.y = 1;
-        _position.y += _speed.y;
-        isHorisontalMovementLocked = false;
-        isVerticalMovementLocked = true;    
-    }*/
-
+   
     if (!isHorisontalMovementLocked)
     {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
@@ -155,13 +132,6 @@ void Player::UpdateImage()
         _sprite.move(_position);
     }
    
-   //Fråga Jonas för tips om hur man får spriten att fortsätta röra sig ett håll efter att ha tryckt knappen en gång
-    
-   
-  
-   
-    
-    
 }
 
 void Player::Draw(sf::RenderWindow& win) const

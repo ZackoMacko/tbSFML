@@ -10,12 +10,13 @@ public:
 	{
 
 	}
-	
-		sf::Sprite _sprite;
-		sf::Vector2f _position;
-		sf::RectangleShape _boundingBox;
+	~GameObject()
+	{
 
-	void Draw();
-	void Update();
+	}
+
+	sf::Sprite _sprite;
+	sf::Vector2f _position;
+	sf::RectangleShape _boundingBox;
+
 };
-
