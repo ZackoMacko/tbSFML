@@ -11,7 +11,7 @@ public:
 	Food(float startX,float startY, float width,sf::Color color);
 	
 	Food(){
-		//Fråga jonas vad som behövs i deconstructorn.
+		
 	}
 	~Food() {
 

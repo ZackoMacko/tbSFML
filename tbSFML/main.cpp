@@ -93,25 +93,38 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     {
         // error...
     }  
+   
+
+
+    
+    sf::Clock clock;
     std::vector<SimpleSquare> squares = {};
     std::vector<sf::Vector2f> positions = {};
-    Player playerHead (windowWidth1 / 2, windowHeight1 / 2, texture);
-    std::list<Player> player = {playerHead};
+    std::vector<sf::Vector2f> positionQueue = {};
+    std::vector<Player> playerParts = {};
 
+    Player playerHead(windowWidth / 2, windowHeight / 2, texture);
+    playerParts.push_back(playerHead);
+    /*for (int i = 0; i < 3; i++)
+    {
+        Player playerBody(float(windowWidth / 2), float(windowHeight / 2), texture);
+        playerParts.push_back(playerBody);
+    }*/
     sf::Color color(0, 150,0,100);
 
-    SimpleSquare square(50, color,100.0f,100.0f);
+   /* SimpleSquare square(50, sf::Color::Yellow,500,550);*/
 
     Food apple(250,250,50,sf::Color::Red);
     std::vector<Food> food = {apple};
 
-    SimpleSquare tempSquare(50, color, 100.0f, 100.0f);
+   /* SimpleSquare tempSquare(50, color, -100.0f, -100.0f);*/
 
 
   
     
     while (window.isOpen())
     {
+       
         sf::Event event;
         while (window.pollEvent(event))
         {
@@ -140,43 +153,53 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
            
         
-        square.Update();
-        square.Draw(window);
+   /*     square.Update();
+        square.Draw(window);*/
         
        
-        playerHead.UpdateImage();
-        playerHead.DetectCollision(windowWidth, windowHeight);
+        playerHead.UpdateHead();
+        playerHead.DetectCollision(float(windowWidth), float(windowHeight));
         playerHead.Draw(window);
+        positionQueue=playerHead.RecentPositions(playerHead, playerParts, positionQueue,clock);
         
+        
+        
+       
+        if (playerParts.size() > 1)
+        {     
+                for (int i = 1; i < playerParts.size(); i++)
+                {
+                    playerParts[i].UpdateBody(playerHead, playerParts, positionQueue, i,clock);
+                    playerParts[i].Draw(window);
+                }
+           
+
+        }
+       
         
         apple.Update();
         apple.Draw(window);
-        //Äpplet försvinner efter att den har ätits 3 gånger. Varför?
+        
         isFoodEaten=apple.DetectCollision(playerHead);
         if (isFoodEaten == true)
         {
-            //Positionen för kroppen bör ändras här eller i player klassen
-            Player playerBody(windowWidth / 2, windowHeight / 2, texture);
+
+            Player playerBody(float(windowWidth / 2), float(windowHeight / 2), texture);
           
-            positions=apple.GeneratePositions(windowWidth, windowHeight, texture);
-            //När metoden nedan anropas så kommer endast 96 positioner återstår. Varför?
+            positions=apple.GeneratePositions(float(windowWidth), float(windowHeight), texture);
+      
             positions=apple.AvailablePositions(playerHead, positions);
             apple._position=apple.ChangePosition(positions);
-            /*apple.Update();*/
+        
             isFoodEaten = false;
-            player.push_back(playerBody);
+            playerParts.push_back(playerBody);
             
-            //Om krachen inte löser sig fråga Jonas om det och även om bakgrundskaparen
         }
       
-        tempSquare.Update();
-        tempSquare.Draw(window);
-
-
+       /* tempSquare.Update();*/
+        /*tempSquare.Draw(window);*/
 
         window.display();
-       
-        
     }
     
     return 0;

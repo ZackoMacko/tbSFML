@@ -1,5 +1,8 @@
 #include "Player.h"
+#include <list>
 
+bool isHorisontalMovementLocked;
+bool isVerticalMovementLocked;
 
 Player::Player( float startX, float startY, sf::Texture& texture)
 {
@@ -8,32 +11,64 @@ Player::Player( float startX, float startY, sf::Texture& texture)
     _speed.y = 5.0f;
     _position.x = startX;
     _position.y = startY;
+
+  
+
 }
 
+std::vector<sf::Vector2f> Player:: RecentPositions(Player& playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue,sf::Clock clock)
+{
+    
+    positionQueue.push_back(playerHead._position);
+    
+    if (positionQueue.size() > playerParts.size() +1)
+    {
+        positionQueue.erase(positionQueue.begin() );
+    }
+    clock.restart();
+    return positionQueue;
+}
 
-//void Player::UpdatePlayer()
-//{
-//
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left))
-//    {
-//        _position.x -= _speed.x;
-//    }
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right))
-//    {
-//        _position.x += _speed.x;
-//    }
-//
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Up))
-//    {
-//        _position.y -= _speed.y;
-//    }
-//    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Down))
-//    {
-//        _position.y += _speed.y;
-//    }
-//
-//    _sprite.setPosition(_position);
-//}
+void Player::UpdateBody( Player &playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue, int &i,sf::Clock &clock)
+{
+   /*
+    if (clock.getElapsedTime().asMilliseconds() >= 100)
+    {*/
+        playerParts[i]._position = positionQueue[i];
+        
+        if (isHorisontalMovementLocked && playerHead._direction.x == 1)
+        {
+
+            playerParts[i]._position.x = playerParts[i]._position.x ;
+
+        }
+        else if (isHorisontalMovementLocked && playerHead._direction.x == -1)
+        {
+
+            playerParts[i]._position.x = playerParts[i]._position.x ;
+        }
+        if (isVerticalMovementLocked && playerHead._direction.y == 1)
+        {
+            playerParts[i]._position.y = playerParts[i]._position.y ;
+
+        }
+        else if (isVerticalMovementLocked && playerHead._direction.y == -1)
+        {
+
+            playerParts[i]._position.y = playerParts[i]._position.y  ;
+        }
+
+        /*clock.restart();*/
+       
+        playerParts[i]._sprite.setPosition(playerParts[i]._position);
+       
+   /* }
+   */
+    
+    
+        
+    
+}
 
 void Player::DetectCollision(int winWidth, int winHeight)
 {
@@ -66,9 +101,8 @@ void Player::DetectCollision(int winWidth, int winHeight)
 
 }
 
-bool isHorisontalMovementLocked;
-bool isVerticalMovementLocked;
-void Player::UpdateImage()
+
+void Player::UpdateHead()
 {
    
     if (!isVerticalMovementLocked)

@@ -20,7 +20,7 @@ sf::Vector2f Food::ChangePosition(std::vector<sf::Vector2f>& positions)
     position = positions.at(randomNumber);
     return position;
 }
-//Metoden ovan och två metoder nedan ska endast anropas när äpplet har blivit uppätit annars kommer lag åstadkommas
+
 std::vector<sf::Vector2f> Food::AvailablePositions(Player player, std::vector<sf::Vector2f>&positions)
 {
     sf::Vector2f temporaryPosition( 0.0f,0.0f);
@@ -28,8 +28,10 @@ std::vector<sf::Vector2f> Food::AvailablePositions(Player player, std::vector<sf
     {
       
         temporaryPosition = positions.at(i);
-        if (player._sprite.getGlobalBounds().contains(temporaryPosition)==true);
+        //player._sprite.getGlobalBounds().contains(temporaryPosition) == true
+        if (player._sprite.getGlobalBounds().contains(temporaryPosition)==true)
         {
+            
             positions.erase(positions.begin() + i);
         }
     }
@@ -40,12 +42,13 @@ std::vector<sf::Vector2f> Food::GeneratePositions(int windowHeight,int windowWid
 {
     std::vector<sf::Vector2f> positions = {};
 
-    for (float i = 0; i < windowHeight / texture.getSize().y; i++)
+    for (float j = 0; j < windowWidth / texture.getSize().x; j++)
     {
-        for (float j = 0; j < windowWidth / texture.getSize().x; j++)
+        
+        for (float i = 0; i < windowHeight / texture.getSize().y; i++)
         {
 
-            sf::Vector2f temporaryPosition(j* texture.getSize().x, i * texture.getSize().y);
+            sf::Vector2f temporaryPosition(i* texture.getSize().x, j * texture.getSize().y);
             
             positions.push_back(temporaryPosition);
         }
