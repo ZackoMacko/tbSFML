@@ -23,7 +23,7 @@ public:
 
 	sf::Vector2f _speed;
 	sf::Vector2f _direction;
-	sf::CircleShape _shape;
+	
 	
 	
 	
