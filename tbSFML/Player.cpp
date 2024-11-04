@@ -16,7 +16,7 @@ Player::Player( float startX, float startY, sf::Texture& texture)
 
 }
 
-std::vector<sf::Vector2f> Player:: RecentPositions(Player& playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue,sf::Clock clock)
+std::vector<sf::Vector2f> Player:: RecentPositions(Player& playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue)
 {
     
     positionQueue.push_back(playerHead._position);
@@ -25,15 +25,13 @@ std::vector<sf::Vector2f> Player:: RecentPositions(Player& playerHead, std::vect
     {
         positionQueue.erase(positionQueue.begin() );
     }
-    clock.restart();
+    
     return positionQueue;
 }
 
-void Player::UpdateBody( Player &playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue, int &i,sf::Clock &clock)
+void Player::UpdateBody( Player &playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue, int &i)
 {
-   /*
-    if (clock.getElapsedTime().asMilliseconds() >= 100)
-    {*/
+   
         playerParts[i]._position = positionQueue[i];
         
         if (isHorisontalMovementLocked && playerHead._direction.x == 1)
@@ -58,13 +56,10 @@ void Player::UpdateBody( Player &playerHead, std::vector<Player>& playerParts, s
             playerParts[i]._position.y = playerParts[i]._position.y  ;
         }
 
-        /*clock.restart();*/
-       
+               
         playerParts[i]._sprite.setPosition(playerParts[i]._position);
        
-   /* }
-   */
-    
+   
     
         
     

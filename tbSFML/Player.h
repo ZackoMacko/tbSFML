@@ -28,8 +28,8 @@ public:
 	
 	
 	void DetectCollision(int winWidth, int winHeight);
-	std::vector<sf::Vector2f> RecentPositions(Player& playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue,sf::Clock clock);
-	void UpdateBody(Player &playerHead,std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue,int &i,sf::Clock &clock);
+	std::vector<sf::Vector2f> RecentPositions(Player& playerHead, std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue);
+	void UpdateBody(Player &playerHead,std::vector<Player>& playerParts, std::vector<sf::Vector2f>& positionQueue,int &i);
 	void UpdateHead();
 	void Draw(sf::RenderWindow& win)const;
 };

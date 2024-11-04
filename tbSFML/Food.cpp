@@ -28,7 +28,7 @@ std::vector<sf::Vector2f> Food::AvailablePositions(Player player, std::vector<sf
     {
       
         temporaryPosition = positions.at(i);
-        //player._sprite.getGlobalBounds().contains(temporaryPosition) == true
+        
         if (player._sprite.getGlobalBounds().contains(temporaryPosition)==true)
         {
             

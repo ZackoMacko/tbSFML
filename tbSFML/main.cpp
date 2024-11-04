@@ -97,27 +97,21 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
 
 
     
-    sf::Clock clock;
+    
     std::vector<SimpleSquare> squares = {};
     std::vector<sf::Vector2f> positions = {};
     std::vector<sf::Vector2f> positionQueue = {};
     std::vector<Player> playerParts = {};
 
     Player playerHead(windowWidth / 2, windowHeight / 2, texture);
-    playerParts.push_back(playerHead);
-    /*for (int i = 0; i < 3; i++)
-    {
-        Player playerBody(float(windowWidth / 2), float(windowHeight / 2), texture);
-        playerParts.push_back(playerBody);
-    }*/
-    sf::Color color(0, 150,0,100);
+    playerParts.push_back(playerHead); 
 
-   /* SimpleSquare square(50, sf::Color::Yellow,500,550);*/
+    sf::Color color(0, 150,0,100);
 
     Food apple(250,250,50,sf::Color::Red);
     std::vector<Food> food = {apple};
 
-   /* SimpleSquare tempSquare(50, color, -100.0f, -100.0f);*/
+  
 
 
   
@@ -141,10 +135,6 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         squares = CreateGrid(texture, windowWidth, windowHeight, color);
         for (int i = 0; i < squares.size() - 1; i++)
         {
-            /* tempSquare = squares.at(i);*/
-            //Kolla igenom så att funktionerna fungerar
-            /* tempSquare.Update();
-            tempSquare.Draw(window);*/
             squares[i].Update();
             squares[i].Draw(window);
                
@@ -153,14 +143,12 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         }
            
         
-   /*     square.Update();
-        square.Draw(window);*/
         
        
         playerHead.UpdateHead();
         playerHead.DetectCollision(float(windowWidth), float(windowHeight));
         playerHead.Draw(window);
-        positionQueue=playerHead.RecentPositions(playerHead, playerParts, positionQueue,clock);
+        positionQueue=playerHead.RecentPositions(playerHead, playerParts, positionQueue);
         
         
         
@@ -169,7 +157,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         {     
                 for (int i = 1; i < playerParts.size(); i++)
                 {
-                    playerParts[i].UpdateBody(playerHead, playerParts, positionQueue, i,clock);
+                    playerParts[i].UpdateBody(playerHead, playerParts, positionQueue, i);
                     playerParts[i].Draw(window);
                 }
            
@@ -196,9 +184,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             
         }
       
-       /* tempSquare.Update();*/
-        /*tempSquare.Draw(window);*/
-
+   
         window.display();
     }
     
