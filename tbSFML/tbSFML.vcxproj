@@ -145,12 +145,16 @@
   <ItemGroup>
     <ClCompile Include="Food.cpp" />
     <ClCompile Include="GameObject.cpp" />
+    <ClCompile Include="LoadData.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainMenu.cpp" />
     <ClCompile Include="Player.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Food.h" />
     <ClInclude Include="GameObject.h" />
+    <ClInclude Include="LoadData.h" />
+    <ClInclude Include="MainMenu.h" />
     <ClInclude Include="Player.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
