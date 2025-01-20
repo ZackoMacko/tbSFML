@@ -82,9 +82,12 @@ std::vector<SimpleSquare> CreateGrid(const sf::Texture texture, int windowWidth,
 
 bool _isFoodEaten = false;
 bool _gameOver = false;
+bool _win = false;
 
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance, _In_ LPWSTR lpCmdLine, _In_ int nCmdShow)
 {
+    int score = 0;
+    int points = 100;
     //Läs mer här: https://learn.microsoft.com/en-us/cpp/c-runtime-library/find-memory-leaks-using-the-crt-library?view=msvc-170
     _CrtSetDbgFlag(_CRTDBG_ALLOC_MEM_DF | _CRTDBG_LEAK_CHECK_DF);
 
@@ -96,7 +99,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     MainMenu mainMenu(windowWidth, windowHeight);
     bool isMenuActive = true;
     sf::Clock clock;
-   
+    
 
     sf::Text text;
     sf::Font font;
@@ -118,11 +121,18 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
     }
     sf::Sprite gameOver;
     sf::Texture GO;
-    if (!GO.loadFromFile("img/gameover.png"))
+    if (!GO.loadFromFile("img/newgameover.png"))
     {
 
     }
     gameOver.setTexture(GO);
+    sf::Sprite winScreen;
+    sf::Texture wS;
+    if (!wS.loadFromFile("img/winscreen.png"))
+    {
+
+    }
+    winScreen.setTexture(wS);
 
     std::vector<SimpleSquare> squares = {};
     std::vector<sf::Vector2f> positions = {};
@@ -213,6 +223,8 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
         {
            
             window.clear();
+            //Test
+            window.setTitle("TB Snake - Score: " + std::to_string(score));
 
             squares = CreateGrid(texture, windowWidth, windowHeight, color);
             for (int i = 0; i < squares.size(); i++)
@@ -257,7 +269,7 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             _isFoodEaten = apple.DetectCollision(playerHead);
             if (_isFoodEaten == true)
             {
-
+                score += points;
                 Player playerBody(float(-100), float(-100), texture);
 
                 positions = apple.GeneratePositions(float(windowWidth), float(windowHeight), texture);
@@ -266,20 +278,19 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
                 apple._position = apple.ChangePosition(positions);
 
                 _isFoodEaten = false;
-                playerParts.push_back(playerBody);
-
-                //Recent position måste updateras med 1 
+                playerParts.push_back(playerBody);            
 
             }
             apple.Update();
             apple.Draw(window);
 
+            if (playerParts.size()==squares.size())
+            {
+                _win = true;
+            }
 
 
-           
-     /*       apple.Update();
-            apple.Draw(window);*/
-            window.display();
+          window.display();
 
         }
 
@@ -288,19 +299,77 @@ int APIENTRY wWinMain(_In_ HINSTANCE hInstance, _In_opt_ HINSTANCE hPrevInstance
             window.clear();
             window.draw(gameOver);
             window.display();
-            if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             {
-                playerHead._sprite.setPosition(windowWidth/2,windowHeight/2);
+                playerHead._position.x= windowWidth/2;
+                playerHead._position.y =  windowHeight/2;
+                playerHead._direction.x=0;
+                playerHead._direction.y = 0;
+              
+                playerParts.clear();
+                _gameOver = false;
+               /* isMenuActive = true;*/
+                playerHead._isHorisontalMovementLocked = false;
+                playerHead._isVerticalMovementLocked = false;
+                score = 0;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+            {
+                playerHead._position.x = windowWidth / 2;
+                playerHead._position.y = windowHeight / 2;
+                playerHead._direction.x = 0;
+                playerHead._direction.y = 0;
+
                 playerParts.clear();
                 _gameOver = false;
                 isMenuActive = true;
-                
+                playerHead._isHorisontalMovementLocked = false;
+                playerHead._isVerticalMovementLocked = false;
+                score = 0;
             }
-            /*else if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        }
+        //Måndag 20/01-2025
+        //Testa så att man kan vinna
+        //Antal rutor är 221
+        //Efter detta spara till github
+        //Hädanefter ska du läsa igenom det kopplade projektdokumentet
+        //Lämna in
+        else if (_win == true)
+        {
+            window.clear();
+            window.draw(winScreen);
+            window.display();
+
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Enter))
             {
+                playerHead._position.x = windowWidth / 2;
+                playerHead._position.y = windowHeight / 2;
+                playerHead._direction.x = 0;
+                playerHead._direction.y = 0;
+
+                playerParts.clear();
                 _gameOver = false;
-                isMenuActive = false;
-            }*/
+                _win = false;
+                playerHead._isHorisontalMovementLocked = false;
+                playerHead._isVerticalMovementLocked = false;
+                score = 0;
+            }
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::M))
+            {
+                playerHead._position.x = windowWidth / 2;
+                playerHead._position.y = windowHeight / 2;
+                playerHead._direction.x = 0;
+                playerHead._direction.y = 0;
+
+                playerParts.clear();
+                _gameOver = false;
+                _win = false;
+                isMenuActive = true;
+                playerHead._isHorisontalMovementLocked = false;
+                playerHead._isVerticalMovementLocked = false;
+                score = 0;
+
+            }
         }
                   
         

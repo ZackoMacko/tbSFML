@@ -11,8 +11,6 @@ public:
     void LoadMethod(bool* _loading);
     sf::Text DisplayText(sf::Text &text,sf::Font &font, int windowHeight, int windowWidth);
     void Draw(sf::RenderWindow& win, sf::Text &text)const;
-    //void Draw(sf::RenderWindow& window,bool* _loading) const;
-    //void LoadContent(bool*  _loading);
 };
 
     

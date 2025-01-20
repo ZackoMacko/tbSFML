@@ -6,7 +6,7 @@
 class GameObject
 {
 public:
-	//GameObject(sf::Sprite sprite, sf::Vector2f position, sf::RectangleShape boundingBox);
+
 	GameObject()
 	{
 

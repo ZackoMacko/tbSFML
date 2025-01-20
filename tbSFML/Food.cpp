@@ -37,7 +37,13 @@ std::vector<sf::Vector2f> Food::AvailablePositions(Player player, std::vector<sf
     }
     return positions;
 }
-
+/// <summary>
+/// This method generates positions based the windows height and width by utilizing the square texture.
+/// </summary>
+/// <param name="windowHeight"></param>
+/// <param name="windowWidth"></param>
+/// <param name="texture"></param>
+/// <returns></returns>
 std::vector<sf::Vector2f> Food::GeneratePositions(int windowHeight,int windowWidth,sf::Texture texture)
 {
     std::vector<sf::Vector2f> positions = {};

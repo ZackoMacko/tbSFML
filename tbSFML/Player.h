@@ -5,10 +5,6 @@
 
 class Player : public GameObject
 {
-private:
-	/*std::list<Player> _mainBody;
-	std::list<Player>::iterator _mainHead;
-	std::list<Player>::iterator _mainTail;*/
 
 public:
 	//Players konstruktor
@@ -23,7 +19,8 @@ public:
 
 	sf::Vector2f _speed;
 	sf::Vector2f _direction;
-	
+	bool _isVerticalMovementLocked;
+	bool _isHorisontalMovementLocked;
 	
 	
 	

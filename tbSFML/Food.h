@@ -10,10 +10,12 @@ public:
 
 	Food(float startX,float startY, float width,sf::Color color);
 	
-	Food(){
+	Food()
+	{
 		
 	}
-	~Food() {
+	~Food() 
+	{
 
 	}
 	
